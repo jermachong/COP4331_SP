@@ -1,9 +1,24 @@
 <?php
 	$inData = getRequestInfo();
+
+	header('Access-Control-Allow-Origin: *');
+	header("Content-Type: application/json");
+	header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+	header('Access-Control-Allow-Headers: Content-Type, Authorization');
+
+	error_reporting(-1); // reports all errors
+	ini_set("display_errors", "1"); // shows all errors
+	ini_set("log_errors", 1);
+	ini_set("error_log", "/tmp/php-error.log");
+
+	if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+		header("HTTP/1.1 200 OK");
+		exit(0);
+	}
 	
-	$userId = $inData["userId"];
-	$firstName = $inData["firstName"];
-	$lastName = $inData["lastName"];	
+	$userId = $inData["UserID"];
+	$firstName = $inData["FirstName"];
+	$lastName = $inData["LastName"];	
 
 	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
 	if ($conn->connect_error) 
