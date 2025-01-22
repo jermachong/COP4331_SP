@@ -1,8 +1,8 @@
 
 <?php
-	header("Access-Control-Allow-Origin: *");
-	header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-	header("Access-Control-Allow-Headers: Content-Type, Authorization");
+	//header("Access-Control-Allow-Origin: *");
+	//header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+	//header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 	error_reporting(-1); // reports all errors
 	ini_set("display_errors", "1"); // shows all errors
@@ -18,7 +18,7 @@
 	
 	$firstName = $inData["FirstName"];
 	$lastName = $inData["LastName"];
-	$login = $inData["Login"]; //only username will be lowercased by frontend
+	$login = $inData["Login"]; 
 	$password = $inData["Password"]; 
 
 	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
@@ -34,7 +34,7 @@
 		$result = $stmt->get_result();
 		$row = $result->fetch_assoc();
 		
-		if ($row['count'] > 0) {//login already exists!
+		if ($row['count'] > 0) {
 			returnWithError("username '$login' is already taken.");
 		} else { 
 			$stmt = $conn->prepare("INSERT INTO Users (FirstName, LastName, Login, Password) VALUES(?,?,?,?)");
