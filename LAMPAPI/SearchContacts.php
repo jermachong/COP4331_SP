@@ -1,5 +1,20 @@
 <?php
 	$inData = getRequestInfo();
+
+	header('Access-Control-Allow-Origin: *');
+	header("Content-Type: application/json");
+	header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+	header('Access-Control-Allow-Headers: Content-Type, Authorization');
+
+	error_reporting(-1); // reports all errors
+	ini_set("display_errors", "1"); // shows all errors
+	ini_set("log_errors", 1);
+	ini_set("error_log", "/tmp/php-error.log");
+
+	if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+		header("HTTP/1.1 200 OK");
+		exit(0);
+	}
 	
 	$searchResults = "";
 	$searchCount = 0;
@@ -12,8 +27,8 @@
 	else
 	{
 		$stmt = $conn->prepare("SELECT * FROM Contacts WHERE (FirstName like ? OR LastName like?) AND UserID=?");
-		$searchName = "%" . $inData["search"] . "%";
-		$stmt->bind_param("sss", $searchName, $searchName, $inData["userId"]);
+		$searchName = "%" . $inData["Search"] . "%";
+		$stmt->bind_param("sss", $searchName, $searchName, $inData["UserID"]);
 		$stmt->execute();
 
 		$result = $stmt->get_result()
