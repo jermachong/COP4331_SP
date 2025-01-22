@@ -1,0 +1,25 @@
+#hstackContainer {
+  padding: 20px;
+  margin: 20px;
+  border-style: solid;
+  border-color: #000000;
+  border-radius: 10px;
+}
+
+.hstack.gap-3 {
+  display: flex;
+  justify-content: space-around;
+}
+
+.gap-3 {
+  gap: 10rem !important;
+}
+
+/* .custom-navbar {
+  display: flex;
+  justify-content: space-between;
+  color: #000000 !important; /* Consistent background color 
+} */
+
+.d-flex {
+}
