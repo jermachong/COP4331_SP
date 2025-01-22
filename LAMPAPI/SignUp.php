@@ -1,8 +1,8 @@
-
 <?php
-	//header("Access-Control-Allow-Origin: *");
-	//header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-	//header("Access-Control-Allow-Headers: Content-Type, Authorization");
+	header('Access-Control-Allow-Origin: *');
+	header("Content-Type: application/json");
+	header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+	header('Access-Control-Allow-Headers: Content-Type, Authorization');
 
 	error_reporting(-1); // reports all errors
 	ini_set("display_errors", "1"); // shows all errors
