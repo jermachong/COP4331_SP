@@ -1,5 +1,9 @@
 <?php
+
 	$inData = getRequestInfo();
+	
+	$searchResults = "";
+	$searchCount = 0;
 
 	header('Access-Control-Allow-Origin: *');
 	header("Content-Type: application/json");
@@ -11,14 +15,8 @@
 	ini_set("log_errors", 1);
 	ini_set("error_log", "/tmp/php-error.log");
 
-	if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-		header("HTTP/1.1 200 OK");
-		exit(0);
-	}
-	
-	$searchResults = "";
-	$searchCount = 0;
 
+	// Update with our SQL DB
 	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
 	if ($conn->connect_error) 
 	{
@@ -26,13 +24,13 @@
 	} 
 	else
 	{
-		$stmt = $conn->prepare("SELECT * FROM Contacts WHERE (FirstName like ? OR LastName like?) AND UserID=?");
-		$searchName = "%" . $inData["Search"] . "%";
-		$stmt->bind_param("sss", $searchName, $searchName, $inData["UserID"]);
+		$stmt = $conn->prepare("select FirstName, LastName, Phone, Email, ID from Contacts where (FirstName like ? OR LastName like ? OR Phone like ? OR Email like ?)  AND UserID=?");
+		$contactName = "%" . $inData["search"] . "%";
+		$stmt->bind_param("ssssi", $contactName, $contactName, $contactName, $contactName, $inData["userID"]);
 		$stmt->execute();
-
-		$result = $stmt->get_result()
-
+		
+		$result = $stmt->get_result();
+		
 		while($row = $result->fetch_assoc())
 		{
 			if( $searchCount > 0 )
@@ -40,9 +38,9 @@
 				$searchResults .= ",";
 			}
 			$searchCount++;
-			$searchResults .= '{"FirstName" : "' . $row["FirstName"]. '", "LastName" : "' . $row["LastName"]. '", "PhoneNumber" : "' . $row["PhoneNumber"]. '", "EmailAddress" : "' . $row["EmailAddress"]. '", "UserID" : "' . $row["UserID"].'", "ID" : "' . $row["ID"]. '"}';
+            $searchResults .= '{"contactFirstName" : "' . $row["FirstName"]. '", "contactLastName" : "' . $row["LastName"]. '", "contactPhone" : "' . $row["Phone"]. '", "contactEmail" : "' . $row["Email"]. '", "contactID" : "' . $row["ID"]. '"}';
 		}
-
+		
 		if( $searchCount == 0 )
 		{
 			returnWithError( "No Records Found" );
@@ -51,7 +49,7 @@
 		{
 			returnWithInfo( $searchResults );
 		}
-
+		
 		$stmt->close();
 		$conn->close();
 	}
@@ -72,7 +70,7 @@
 		$retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
 		sendResultInfoAsJson( $retValue );
 	}
-
+	
 	function returnWithInfo( $searchResults )
 	{
 		$retValue = '{"results":[' . $searchResults . '],"error":""}';
