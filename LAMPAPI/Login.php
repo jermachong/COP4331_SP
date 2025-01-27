@@ -1,28 +1,30 @@
 <?php
-	header("Access-Control-Allow-Origin: *");
-	header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-	header("Access-Control-Allow-Headers: Content-Type, Authorization");
+	header('Access-Control-Allow-Origin: *');
+	header("Content-Type: application/json");
+	header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+	header('Access-Control-Allow-Headers: Content-Type, Authorization');
 
-	error_reporting(-1); // reports all errors
-	ini_set("display_errors", "1"); // shows all errors
+	error_reporting(-1);
+	ini_set("display_errors", "1");
 	ini_set("log_errors", 1);
 	ini_set("error_log", "/tmp/php-error.log");
-	
+
+
 	$inData = getRequestInfo();
 	
 	$id = 0;
-	$firstname = "";
-	$lastname = "";
+	$firstName = "";
+	$lastName = "";
 
-	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331"); 	
+	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
 	if( $conn->connect_error )
 	{
 		returnWithError( $conn->connect_error );
 	}
 	else
 	{
-		$stmt = $conn->prepare("SELECT ID,FirstName,LastName FROM Users WHERE Login=? AND Password =?");
-		$stmt->bind_param("ss", $inData["Login"], $inData["Password"]);
+		$stmt = $conn->prepare("SELECT ID, FirstName, LastName FROM Users WHERE Login=? AND Password =?");
+		$stmt->bind_param("ss", $inData['Username'], $inData['Password']);
 		$stmt->execute();
 		$result = $stmt->get_result();
 
@@ -52,13 +54,13 @@
 	
 	function returnWithError( $err )
 	{
-		$retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
+		$retValue = '{"userID":0,"firstName":"","lastName":"","error":"' . $err . '"}';
 		sendResultInfoAsJson( $retValue );
 	}
 	
-	function returnWithInfo( $firstname, $lastname, $id )
+	function returnWithInfo( $firstName, $lastName, $id )
 	{
-		$retValue = '{"id":' . $id . ',"firstName":"' . $firstname . '","lastName":"' . $lastname . '","error":""}';
+		$retValue = '{"userID":' . $id . ',"firstName":"' . $firstName . '","lastName":"' . $lastName . '","error":""}';
 		sendResultInfoAsJson( $retValue );
 	}
 	
