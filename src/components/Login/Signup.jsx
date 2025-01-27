@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import "./login.css";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -15,18 +16,24 @@ const Signup = () => {
     >
       <form>
         <div className="signUp mb-3">
-          <label htmlFor="logIn" className="form-label">
+          <label
+            htmlFor="logIn"
+            className="form-label"
+            style={{ color: "#ffffff" }}
+          >
             Already have an account?
           </label>
           <button
             type="button"
-            className="btn btn-primary ms-2"
+            className="btn custom-btn ms-2"
             onClick={handleSignUpClick}
           >
             Log in
           </button>
         </div>
-        <h1 className="mb-4">Get started managing your contacts!</h1>
+        <h2 className="mb-4" style={{ color: "#ffffff" }}>
+          Get started managing your contacts!
+        </h2>
 
         <div className="row g-3 mb-3">
           <div className="col-md">
@@ -37,7 +44,9 @@ const Signup = () => {
                 id="firstName"
                 placeholder="First Name"
               />
-              <label htmlFor="firstName">First Name</label>
+              <label htmlFor="firstName" style={{ color: "#68686E" }}>
+                First Name
+              </label>
             </div>
           </div>
           <div className="col-md">
@@ -48,7 +57,9 @@ const Signup = () => {
                 id="lastName"
                 placeholder="Last Name"
               />
-              <label htmlFor="lastName">Last Name</label>
+              <label htmlFor="lastName" style={{ color: "#68686E" }}>
+                Last Name
+              </label>
             </div>
           </div>
         </div>
@@ -60,7 +71,9 @@ const Signup = () => {
             id="inputEmail"
             placeholder="Email"
           />
-          <label htmlFor="inputEmail">Email</label>
+          <label htmlFor="inputEmail" style={{ color: "#68686E" }}>
+            Email
+          </label>
         </div>
 
         <div className="form-floating mb-3">
@@ -70,7 +83,9 @@ const Signup = () => {
             id="inputPhoneNumber"
             placeholder="Phone Number"
           />
-          <label htmlFor="inputPhoneNumber">Phone Number</label>
+          <label htmlFor="inputPhoneNumber" style={{ color: "#68686E" }}>
+            Phone Number
+          </label>
         </div>
 
         <div className="form-floating mb-3">
@@ -80,7 +95,9 @@ const Signup = () => {
             id="inputUsername"
             placeholder="Username"
           />
-          <label htmlFor="inputUsername">Username</label>
+          <label htmlFor="inputUsername" style={{ color: "#68686E" }}>
+            Username
+          </label>
         </div>
 
         <div className="form-floating mb-4">
@@ -90,10 +107,16 @@ const Signup = () => {
             id="inputPassword"
             placeholder="Password"
           />
-          <label htmlFor="inputPassword">Password</label>
+          <label htmlFor="inputPassword" style={{ color: "#68686E" }}>
+            Password
+          </label>
         </div>
 
-        <button type="submit" className="btn btn-primary w-100">
+        <button
+          type="submit"
+          className="btn custom-btn mb-3"
+          style={{ float: "right" }}
+        >
           Submit
         </button>
       </form>

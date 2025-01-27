@@ -1,45 +1,45 @@
 import React from "react";
-
+import "./Header.css";
 const Header = () => {
   return (
     <div>
       <button
         type="button"
-        class="btn btn-secondary"
+        className="btn btn-secondary"
         data-bs-toggle="modal"
         data-bs-target="#exampleModal"
       >
-        My Profile{" "}
+        My Profile
       </button>
 
       <div
-        class="modal fade"
+        className="modal fade"
         id="exampleModal"
-        tabindex="-1"
+        tabIndex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="exampleModalLabel">
                 My Profile
               </h1>
               <button
                 type="button"
-                class="btn-close"
+                className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
             </div>
-            <div class="modal-body">
+            <div className="modal-body">
               <div className="row g-3 mb-3">
                 <div className="col-md">
                   <div className="form-floating">
                     <input
                       type="text"
                       className="form-control"
-                      id="firstName"
+                      id="myFirstName"
                       placeholder="First Name"
                     />
                     <label htmlFor="firstName">First Name</label>
@@ -50,7 +50,7 @@ const Header = () => {
                     <input
                       type="text"
                       className="form-control"
-                      id="lastName"
+                      id="myLastName"
                       placeholder="Last Name"
                     />
                     <label htmlFor="lastName">Last Name</label>
@@ -62,7 +62,7 @@ const Header = () => {
                 <input
                   type="email"
                   className="form-control"
-                  id="inputEmail"
+                  id="myEmail"
                   placeholder="Email"
                 />
                 <label htmlFor="inputEmail">Email</label>
@@ -72,7 +72,7 @@ const Header = () => {
                 <input
                   type="text"
                   className="form-control"
-                  id="inputPhoneNumber"
+                  id="myPhoneNumber"
                   placeholder="Phone Number"
                 />
                 <label htmlFor="inputPhoneNumber">Phone Number</label>
@@ -82,7 +82,7 @@ const Header = () => {
                 <input
                   type="text"
                   className="form-control"
-                  id="inputUsername"
+                  id="myUsername"
                   placeholder="Username"
                 />
                 <label htmlFor="inputUsername">Username</label>
@@ -92,25 +92,25 @@ const Header = () => {
                 <input
                   type="password"
                   className="form-control"
-                  id="inputPassword"
+                  id="myPassword"
                   placeholder="Password"
                 />
                 <label htmlFor="inputPassword">Password</label>
               </div>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-outline-primary">
+            <div className="modal-footer">
+              <button type="button" className="btn btn-outline-primary me-auto">
                 Log Out
               </button>
 
               <button
                 type="button"
-                class="btn btn-secondary"
+                className="btn btn-secondary"
                 data-bs-dismiss="modal"
               >
                 Close
               </button>
-              <button type="button" class="btn btn-primary">
+              <button type="button" className="btn btn-primary">
                 Save changes
               </button>
             </div>
