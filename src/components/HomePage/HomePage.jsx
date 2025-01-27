@@ -1,171 +1,156 @@
 import React from "react";
-import "./Homepage.css";
+import "./HomePage.css";
 
 const HomePage = () => {
   return (
-    <div>
-      <div>
-        <nav className="navbar">
-          <div className="container-fluid">
-            <button
-              type="button"
-              class="btn btn-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-            >
-              Launch demo modal
+    <div className="container-md mt-4">
+      <ul className="nav nav-tabs" id="myTab" role="tablist">
+        <li className="nav-item" role="presentation">
+          <button
+            className="nav-link active"
+            id="friends-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#friends"
+            type="button"
+            role="tab"
+            aria-controls="friends"
+            aria-selected="true"
+          >
+            Friends
+          </button>
+        </li>
+        <li className="nav-item" role="presentation">
+          <button
+            className="nav-link"
+            id="search-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#search"
+            type="button"
+            role="tab"
+            aria-controls="search"
+            aria-selected="false"
+          >
+            Search
+          </button>
+        </li>
+        <li className="nav-item" role="presentation">
+          <button
+            className="nav-link"
+            id="add-friends-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#add-friends"
+            type="button"
+            role="tab"
+            aria-controls="add-friends"
+            aria-selected="false"
+          >
+            Add Friends
+          </button>
+        </li>
+      </ul>
+      <div className="tab-content" id="myTabContent">
+        {/* Friends */}
+        <div
+          className="tab-pane fade show active"
+          id="friends"
+          role="tabpanel"
+          aria-labelledby="friends-tab"
+        >
+          <div id="hstackContainer">
+            <div className="hstack gap-3">
+              <div className="p-2">Name</div>
+              <div className="p-2">Email</div>
+              <div className="p-2">Phone Number</div>
+              <div className="p-2">Actions</div>
+            </div>
+          </div>
+        </div>
+        {/* Search */}
+        <div
+          className="tab-pane fade"
+          id="search"
+          role="tabpanel"
+          aria-labelledby="search-tab"
+        >
+          <h2>Search</h2>
+          <form>
+            <input
+              type="text"
+              placeholder="Search for friends"
+              className="form-control mb-3"
+            />
+            <button type="submit" className="btn btn-primary">
+              Search
             </button>
-            <div
-              class="modal fade"
-              id="exampleModal"
-              tabindex="-1"
-              aria-labelledby="exampleModalLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="modalLabel">
-                      Add New Contact
-                    </h1>
-                    <button
-                      type="button"
-                      class="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                  <div class="modal-body">
-                    <form>
-                      <div className="row g-2">
-                        <div className="col-md">
-                          <div className="form-floating">
-                            <input
-                              type="firstName"
-                              className="form-control"
-                              id="firstName"
-                              placeholder="First Name"
-                            />
-                            <label htmlFor="inputFirstName">First Name</label>
-                          </div>
-                        </div>
-                        <div className="col-md">
-                          <div className="form-floating">
-                            <input
-                              type="firstName"
-                              className="form-control"
-                              id="firstName"
-                              placeholder="First Name"
-                            />
-                            <label htmlFor="inputLastName">Last Name</label>
-                          </div>
-                        </div>
-                      </div>
-                      <button
-                        type="submit "
-                        className="btn btn-primary mx-auto d-block"
-                      >
-                        Submit
-                      </button>
-                    </form>
-                  </div>
+          </form>
+        </div>
+        {/* Add Friends */}
+        <div
+          className="tab-pane fade"
+          id="add-friends"
+          role="tabpanel"
+          aria-labelledby="add-friends-tab"
+        >
+          <h2>Add Friends</h2>
+          <form>
+            <div className="row g-3 mb-3">
+              <div className="col-md">
+                <div className="form-floating">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="firstName"
+                    placeholder="First Name"
+                  />
+                  <label htmlFor="firstName">First Name</label>
+                </div>
+              </div>
+              <div className="col-md">
+                <div className="form-floating">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="lastName"
+                    placeholder="Last Name"
+                  />
+                  <label htmlFor="lastName">Last Name</label>
                 </div>
               </div>
             </div>
-            <form className="d-flex w-75 p-3" role="search">
+
+            <div className="form-floating mb-3">
               <input
+                type="email"
                 className="form-control"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
+                id="inputEmail"
+                placeholder="Email"
               />
-              <button className="btn btn-outline-success" type="submit">
-                Search
-              </button>
-            </form>
-            {/* <button
-              className="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div
-              className="collapse navbar-collapse"
-              id="navbarSupportedContent"
-            > */}
-            <button type="button" class="btn btn-primary">
-              Delete
-            </button>
-            {/* <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Sort
-              </a>
-              <ul className="dropdown-menu">
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Name
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Email
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Phone Number
-                  </a>
-                </li>
-              </ul>
-            </li> */}
-            {/* </div> */}
-            <div class="dropdown">
-              <button
-                class="btn btn-primary dropdown-toggle"
-                type="button"
-                id="dropdownMenuButton1"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Sort
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li>
-                  <a class="dropdown-item" href="#">
-                    Action
-                  </a>
-                </li>
-                <li>
-                  <a class="dropdown-item" href="#">
-                    Another action
-                  </a>
-                </li>
-                <li>
-                  <a class="dropdown-item" href="#">
-                    Something else here
-                  </a>
-                </li>
-              </ul>
+              <label htmlFor="inputEmail">Email</label>
             </div>
-          </div>
-        </nav>
-      </div>
-      <div id="hstackContainer">
-        <div className="hstack gap-3">
-          <div className="p-2">Name</div>
-          <div className="p-2">Email</div>
-          <div className="p-2">Phone Number</div>
-          <div className="p-2">Actions</div>
+
+            <div className="form-floating mb-3">
+              <input
+                type="text"
+                className="form-control"
+                id="inputPhoneNumber"
+                placeholder="Phone Number"
+              />
+              <label htmlFor="inputPhoneNumber">Phone Number</label>
+            </div>
+
+            <div className="form-floating mb-3">
+              <input
+                type="text"
+                className="form-control"
+                id="inputUsername"
+                placeholder="Username"
+              />
+              <label htmlFor="inputUsername">Username</label>
+            </div>
+            <button type="submit " className="btn btn-primary mx-auto d-block">
+              Submit
+            </button>
+          </form>
         </div>
       </div>
     </div>
