@@ -1,45 +1,38 @@
-
-
 <?php
-	$inData = getRequestInfo();
-
 	header('Access-Control-Allow-Origin: *');
 	header("Content-Type: application/json");
 	header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 	header('Access-Control-Allow-Headers: Content-Type, Authorization');
 
-	error_reporting(-1); // reports all errors
-	ini_set("display_errors", "1"); // shows all errors
+	error_reporting(-1);
+	ini_set("display_errors", "1"); 
 	ini_set("log_errors", 1);
 	ini_set("error_log", "/tmp/php-error.log");
 
-	if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-		header("HTTP/1.1 200 OK");
-		exit(0);
-	}
-	
-	$phone = $inData["Phone"];
-	$email = $inData["Email"];
-	$newFirst = $inData["newFirst"];
-	$newLast = $inData["newLast"];
-	$id = $inData["UserID"];
-	
+
+    $inData = getRequestInfo();
+
+	$contactPhone = $inData["contactPhone"];
+	$contactEmail = $inData["contactEmail"];
+	$contactFirstName = $inData["contactFirstName"];
+	$contactLastName = $inData["contactLastName"];
+	$contactID = $inData["contactID"];
 
 	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
-	if ($conn->connect_error) 
-	{
-		returnWithError( $conn->connect_error );
-	} 
-	else
-	{
-		$stmt = $conn->prepare("UPDATE Contacts SET FirstName = ?, LastName=?, Phone= ?, Email= ? WHERE ID= ?");
-			$stmt->bind_param("ssssi", $newFirst, $newLast, $phone, $email, $id);
+		if ($conn->connect_error)
+		{
+			returnWithError( $conn->connect_error );
+		}
+		else
+		{
+			$stmt = $conn->prepare("UPDATE Contacts SET FirstName = ?, LastName=?, Phone= ?, Email= ? WHERE ID= ?");
+			$stmt->bind_param("ssssi", $contactFirstName, $contactLastName, $contactPhone, $contactEmail, $contactID);
 			$stmt->execute();
-
 			$stmt->close();
 			$conn->close();
+			http_response_code(200);
 			returnWithError("");
-	}
+		}
 
 	function getRequestInfo()
 	{
@@ -51,11 +44,15 @@
 		header('Content-type: application/json');
 		echo $obj;
 	}
-	
+
 	function returnWithError( $err )
-	{
-		$retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
-		sendResultInfoAsJson( $retValue );
-	}
-	
+{
+    if ($err !== "") {
+        http_response_code(500);
+    }
+    $retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
+    sendResultInfoAsJson( $retValue );
+}
+
+
 ?>

@@ -1,4 +1,14 @@
 <?php
+	header('Access-Control-Allow-Origin: *');
+	header("Content-Type: application/json");
+	header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+	header('Access-Control-Allow-Headers: Content-Type, Authorization');
+
+	error_reporting(-1);
+	ini_set("display_errors", "1");
+	ini_set("log_errors", 1);
+	ini_set("error_log", "/tmp/php-error.log");
+
 
 	$inData = getRequestInfo();
 	
@@ -6,22 +16,6 @@
 	$firstName = "";
 	$lastName = "";
 
-	header('Access-Control-Allow-Origin: *');
-	header("Content-Type: application/json");
-	header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-	header('Access-Control-Allow-Headers: Content-Type, Authorization');
-
-	error_reporting(-1); // reports all errors
-	ini_set("display_errors", "1"); // shows all errors
-	ini_set("log_errors", 1);
-	ini_set("error_log", "/tmp/php-error.log");
-
-	if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-		header("HTTP/1.1 200 OK");
-		exit(0);
-	}
-
-	// Update with our SQL DB
 	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
 	if( $conn->connect_error )
 	{
@@ -30,7 +24,7 @@
 	else
 	{
 		$stmt = $conn->prepare("SELECT ID, FirstName, LastName FROM Users WHERE Login=? AND Password =?");
-		$stmt->bind_param("ss", $inData['username'], $inData['password']);
+		$stmt->bind_param("ss", $inData['Username'], $inData['Password']);
 		$stmt->execute();
 		$result = $stmt->get_result();
 
