@@ -1,6 +1,13 @@
 import React from "react";
 import "./Header.css";
+import { useNavigate } from "react-router-dom";
+
 const Header = () => {
+  const navigate = useNavigate();
+
+  const handleLogoutClick = () => {
+    navigate("/");
+  };
   return (
     <div>
       <button
@@ -99,7 +106,11 @@ const Header = () => {
               </div>
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-outline-primary me-auto">
+              <button
+                type="button"
+                className="btn btn-outline-primary me-auto"
+                onClick={handleLogoutClick}
+              >
                 Log Out
               </button>
 

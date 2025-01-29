@@ -4,6 +4,7 @@ import Signup from "./components/Login/signup";
 import Header from "./components/Header";
 import HomePage from "./components/HomePage/HomePage";
 import videoBG from "../src/assets/videoBG.mp4";
+
 import "./App.css";
 
 function App() {

@@ -51,28 +51,43 @@ const HomePage = () => {
       <div className="tab-content" id="myTabContent">
         {/* Friends */}
         <div
-          className="tab-pane fade show active"
+          className="tab-pane fade show active pt-4"
           id="friends"
           role="tabpanel"
           aria-labelledby="friends-tab"
+          style={{ color: "#ffffff" }}
         >
-          <div id="hstackContainer">
-            <div className="hstack gap-3">
+          <div id="hstackContainer" style={{ borderColor: "#ffffff" }}>
+            <div className="d-flex justify-content-around">
               <div className="p-2">Name</div>
               <div className="p-2">Email</div>
               <div className="p-2">Phone Number</div>
-              <div className="p-2">Actions</div>
+              <div className="p-2 d-flex gap-2">
+                Actions
+                <button
+                  className="btn btn-outline-light btn-sm"
+                  style={{ color: "#ffffff" }}
+                >
+                  <i
+                    class="bi bi-pencil-square"
+                    style={{ color: "#ffffff" }}
+                  ></i>
+                </button>
+                <button className="btn btn-danger btn-sm">
+                  <i class="bi bi-trash-fill"></i>
+                </button>
+              </div>
             </div>
           </div>
         </div>
         {/* Search */}
         <div
-          className="tab-pane fade"
+          className="tab-pane fade pt-4"
           id="search"
           role="tabpanel"
           aria-labelledby="search-tab"
         >
-          <h2>Search</h2>
+          <h2 style={{ color: "#ffffff" }}>Search</h2>
           <form>
             <input
               type="text"
@@ -86,12 +101,12 @@ const HomePage = () => {
         </div>
         {/* Add Friends */}
         <div
-          className="tab-pane fade"
+          className="tab-pane fade pt-4"
           id="add-friends"
           role="tabpanel"
           aria-labelledby="add-friends-tab"
         >
-          <h2>Add Friends</h2>
+          <h2 style={{ color: "#ffffff" }}>Add Friends</h2>
           <form>
             <div className="row g-3 mb-3">
               <div className="col-md">

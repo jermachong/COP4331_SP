@@ -9,6 +9,10 @@ const Signup = () => {
     navigate("/");
   };
 
+  const handleTempClick = () => {
+    navigate("/HomePage");
+  };
+
   return (
     <div
       className="form-container"
@@ -111,7 +115,13 @@ const Signup = () => {
             Password
           </label>
         </div>
-
+        <button
+          type="button"
+          className="btn custom-btn ms-2"
+          onClick={handleTempClick}
+        >
+          Temporary Home Page link
+        </button>
         <button
           type="submit"
           className="btn custom-btn mb-3"
