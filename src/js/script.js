@@ -60,7 +60,7 @@ function loginUser() {
     body: JSON.stringify(payload),
     headers: { "Content-Type": "application/json" },
   })
-    // .then((response) => response.json())
+    .then((response) => response.json())
     .then((data) => {
       if (data.error) {
         alert("Login failed: " + data.error);
@@ -142,7 +142,7 @@ function addContact() {
     body: JSON.stringify(payload),
     headers: { "Content-Type": "application/json" },
   })
-    // .then((response) => response.json())
+    .then((response) => response.json())
     .then((data) => {
       if (data.error) {
         alert("Failed to add contact: " + data.error);
