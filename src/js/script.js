@@ -53,7 +53,7 @@ function loginUser() {
   let login = document.getElementById("inputUsername").value;
   let password = document.getElementById("inputPassword").value;
 
-  let payload = { login: login, password: password };
+  let payload = { Username: login, Password: password };
 
   fetch("LAMPAPI/Login.php", {
     method: "POST",
@@ -66,7 +66,7 @@ function loginUser() {
         alert("Login failed: " + data.error);
       } else {
         alert("Login successful!");
-        localStorage.setItem("userId", data.id);
+        localStorage.setItem("userId", data.userID);
         document.getElementById("loginPage").style.display = "none";
         document.getElementById("homePage").style.display = "block";
         document.getElementById("mainHeader").style.display = "block";
