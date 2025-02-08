@@ -277,6 +277,7 @@ function fetchContacts() {
     return;
   }
 
+  // Use userId (not userID) in the URL
   fetch(`LAMPAPI/FetchContacts.php?user_id=${userId}`)
     .then((response) => response.json())
     .then((data) => {
