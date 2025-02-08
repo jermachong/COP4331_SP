@@ -123,18 +123,14 @@ function addContactToUI(contact) {
 
   // Create a new row for the contact
   let rowDiv = document.createElement("div");
-  // Set a data attribute for easy lookup later
   rowDiv.setAttribute("data-contact-id", contact.ID);
-  // Use classes similar to your hstack container:
-  // d-flex for a flex container, justify-content-around to space the columns, and mb-2 for some margin
   rowDiv.classList.add("d-flex", "justify-content-around", "mb-2");
 
-  // Combine first and last name into one "Name" column
   const fullName = `${contact.FirstName} ${contact.LastName}`;
 
-  // Build the HTML to match the hstack columns:
-  // 1. Name, 2. Email, 3. Phone Number, 4. Actions (with edit and delete buttons)
   rowDiv.innerHTML = `
+    <div id="hstackContainer" class="w-100" style="border-color: #ffffff">
+    <div class="d-flex justify-content-around">
     <div class="p-2 name">${fullName}</div>
     <div class="p-2 email">${contact.Email}</div>
     <div class="p-2 phone">${contact.Phone}</div>
@@ -150,6 +146,9 @@ function addContactToUI(contact) {
         </svg>
       </button>
     </div>
+    </div>
+    </div>
+
   `;
 
   // Append the newly created row to the container
