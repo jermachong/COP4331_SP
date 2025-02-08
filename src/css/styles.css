@@ -34,7 +34,7 @@ body {
 
 .hstack.gap-3 {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .gap-3 {
