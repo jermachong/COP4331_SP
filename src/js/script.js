@@ -164,7 +164,7 @@ function fetchContacts() {
     return;
   }
   // Call the GET endpoint with the user_id query parameter
-  fetch(`LAMPAPI/fetchContact.php?user_id=${userId}`, {
+  fetch(`LAMPAPI/FetchContacts.php?user_id=${userId}`, {
     method: "GET",
   })
     .then((response) => {
