@@ -475,17 +475,16 @@ document.addEventListener("DOMContentLoaded", function () {
   const friendsTab = document.getElementById("friends");
   if (friendsTab) {
     friendsTab.addEventListener("click", function (event) {
+      console.log("You clicked on friendsTab. event target:", event.target);
       const editBtn = event.target.closest(".edit-btn");
-      if (editBtn) {
-        const contactID = editBtn.getAttribute("data-contact-id");
-        editContact(contactID);
-        return;
-      }
       const deleteBtn = event.target.closest(".delete-btn");
+      if (editBtn) {
+        console.log("Edit button was clicked!");
+        editContact(editBtn.getAttribute("data-contact-id"));
+      }
       if (deleteBtn) {
-        const contactID = deleteBtn.getAttribute("data-contact-id");
-        deleteContact(contactID);
-        return;
+        console.log("Delete button was clicked!");
+        deleteContact(deleteBtn.getAttribute("data-contact-id"));
       }
     });
   }
