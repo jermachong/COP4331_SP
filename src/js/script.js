@@ -149,7 +149,7 @@ function addContact() {
         alert("New contact added successfully!");
         document.getElementById("addFriendsForm").reset();
 
-        appendNewContact(data.newContact);
+        fetchContacts();
       }
     })
     .catch((error) => {
@@ -157,27 +157,6 @@ function addContact() {
       alert("An error occurred while adding the contact.");
     });
 }
-function appendNewContact(contact) {
-  const friendsTab = document.getElementById("friends");
-  let rowDiv = document.createElement("div");
-  rowDiv.classList.add("d-flex", "justify-content-around", "mb-2");
-
-  rowDiv.innerHTML = `
-    <div class="p-2">${contact.firstName} ${contact.lastName}</div>
-    <div class="p-2">${contact.email}</div>
-    <div class="p-2">${contact.phoneNumber}</div>
-    <div class="p-2 d-flex gap-2">
-      <button class="btn btn-outline-light btn-sm" onclick="editContact(${contact.id})">
-        <i class="bi bi-pencil-square" style="color: #ffffff"></i>
-      </button>
-      <button class="btn btn-danger btn-sm" onclick="deleteContact(${contact.id})">
-        <i class="bi bi-trash-fill"></i>
-      </button>
-    </div>
-  `;
-  friendsTab.appendChild(rowDiv);
-}
-
 function fetchContacts() {
   const userId = localStorage.getItem("userId");
   if (!userId) {
