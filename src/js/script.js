@@ -532,6 +532,7 @@ document.addEventListener("DOMContentLoaded", function () {
           alert("Error updating profile: " + data.error);
         } else {
           alert("Profile updated successfully!");
+          fetchUserProfile();
         }
       })
       .catch((error) => {
@@ -559,5 +560,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (localStorage.getItem("userId")) {
     fetchContacts();
+    fetchUserProfile();
   }
 });
