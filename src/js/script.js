@@ -263,6 +263,29 @@ function cancelEdit(
   rowDiv.setAttribute("data-contact-id", contactID);
 }
 
+function fetchContacts() {
+  const userId = localStorage.getItem("userId");
+  if (!userId) {
+    return;
+  }
+
+  // Replace with the correct URL to your FetchContacts.php endpoint
+  fetch(`LAMPAPI/FetchContacts.php?user_id=${userId}`)
+    .then((response) => response.json())
+    .then((contacts) => {
+      // Clear the current UI (if necessary)
+      const friendsTab = document.getElementById("friends");
+      friendsTab.innerHTML = "";
+      // For each contact returned, add it to the UI
+      contacts.forEach((contact) => {
+        addContactToUI(contact);
+      });
+    })
+    .catch((error) => {
+      console.error("Error fetching contacts:", error);
+    });
+}
+
 // Global helper function to delete a contact
 function deleteContact(contactID) {
   if (!confirm("Are you sure you want to delete this contact?")) {
@@ -364,5 +387,9 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
     });
+  }
+
+  if (localStorage.getItem("userId")) {
+    fetchContacts();
   }
 });

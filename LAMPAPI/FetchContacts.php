@@ -23,7 +23,7 @@ if ($userID === 0) {
     exit;
 }
 
-// Connect to the database just like updateContacts.php does
+// Connect to the database
 $conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
 if ($conn->connect_error) {
     echo json_encode(["error" => $conn->connect_error]);
