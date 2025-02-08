@@ -125,7 +125,6 @@ function addContact() {
   let lastName = document.getElementById("addLastName").value.trim();
   let email = document.getElementById("addEmail").value.trim();
   let phone = document.getElementById("addPhoneNumber").value.trim();
-  let username = document.getElementById("addUsername").value.trim();
 
   // prepare payload
   let payload = {
@@ -149,14 +148,34 @@ function addContact() {
       } else {
         alert("New contact added successfully!");
         document.getElementById("addFriendsForm").reset();
-
-        fetchContacts();
+        // Append the new contact to the UI
+        appendContactToUI(data.newContact);
       }
     })
     .catch((error) => {
       console.error("Error:", error);
       alert("An error occurred while adding the contact.");
     });
+}
+
+function appendContactToUI(contact) {
+  const friendsTab = document.getElementById("friends");
+  let rowDiv = document.createElement("div");
+  rowDiv.classList.add("d-flex", "justify-content-around", "mb-2");
+  rowDiv.innerHTML = `
+    <div class="p-2">${contact.firstName} ${contact.lastName}</div>
+    <div class="p-2">${contact.email}</div>
+    <div class="p-2">${contact.phoneNumber}</div>
+    <div class="p-2 d-flex gap-2">
+      <button class="btn btn-outline-light btn-sm" onclick="editContact(${contact.id})">
+        <i class="bi bi-pencil-square" style="color: #ffffff"></i>
+      </button>
+      <button class="btn btn-danger btn-sm" onclick="deleteContact(${contact.id})">
+        <i class="bi bi-trash-fill"></i>
+      </button>
+    </div>
+  `;
+  friendsTab.appendChild(rowDiv);
 }
 function fetchContacts() {
   const userId = localStorage.getItem("userId");
