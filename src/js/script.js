@@ -21,6 +21,7 @@ function loginUser() {
         alert("Login successful!");
         localStorage.setItem("userId", data.userID);
         document.getElementById("loginPage").style.display = "none";
+        document.getElementById("signupPage").style.display = "none";
         document.getElementById("homePage").style.display = "block";
         document.getElementById("mainHeader").style.display = "block";
         fetchContacts();
