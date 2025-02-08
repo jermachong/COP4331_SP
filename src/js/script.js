@@ -150,7 +150,7 @@ function addContactToUI(contact) {
               <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293z"/>
             </svg>
           </button>
-          <button class="btn btn-danger btn-sm delete-btn" data-contact-id="${contact.ID}" onclick="deleteContact(${contact.ID})">
+          <button class="btn btn-danger btn-sm delete-btn" data-contact-id="${contact.ID}">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
               <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
             </svg>
@@ -164,37 +164,57 @@ function addContactToUI(contact) {
   friendsTab.appendChild(rowDiv);
 }
 
-// Function to handle editing a contact: replace static text with input fields
 function editContact(contactID) {
   let rowDiv = document.querySelector(`div[data-contact-id='${contactID}']`);
   if (!rowDiv) return;
 
-  // Get the current values from separate elements
   let firstName = rowDiv.querySelector(".firstName").innerText;
   let lastName = rowDiv.querySelector(".lastName").innerText;
   let email = rowDiv.querySelector(".email").innerText;
   let phone = rowDiv.querySelector(".phone").innerText;
 
   rowDiv.innerHTML = `
-    <div class="p-2">
-      <input type="text" class="editFirstName" value="${firstName}">
-    </div>
-    <div class="p-2">
-      <input type="text" class="editLastName" value="${lastName}">
-    </div>
-    <div class="p-2">
-      <input type="text" class="editEmail" value="${email}">
-    </div>
-    <div class="p-2">
-      <input type="text" class="editPhone" value="${phone}">
-    </div>
-    <div class="p-2 d-flex gap-2">
-      <button class="btn btn-success btn-sm" onclick="saveContact(${contactID})">Save</button>
-      <button class="btn btn-secondary btn-sm" 
-              onclick="cancelEdit(${contactID}, '${firstName}', '${lastName}', '${email}', '${phone}')">Cancel</button>
+    <div id="hstackContainer" class="w-100" style="border-color: #ffffff;">
+      <div class="d-flex justify-content-around" style="width: 100%; gap: 0;">
+        <!-- First Name input -->
+        <div class="p-2" style="color: #ffffff; flex: 2; text-align: left;">
+          <input type="text" class="editFirstName" value="${firstName}">
+        </div>
+
+        <!-- Last Name input -->
+        <div class="p-2" style="color: #ffffff; flex: 2; text-align: left;">
+          <input type="text" class="editLastName" value="${lastName}">
+        </div>
+
+        <!-- Email input -->
+        <div class="p-2" style="color: #ffffff; flex: 3; text-align: left;">
+          <input type="text" class="editEmail" value="${email}">
+        </div>
+
+        <!-- Phone input -->
+        <div class="p-2" style="color: #ffffff; flex: 2; text-align: left;">
+          <input type="text" class="editPhone" value="${phone}">
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="p-2 d-flex gap-2" style="flex: 1; justify-content: center;">
+          <button
+            class="btn btn-success btn-sm"
+            onclick="saveContact(${contactID})"
+          >
+            Save
+          </button>
+          <button
+            class="btn btn-secondary btn-sm"
+            onclick="cancelEdit(${contactID}, '${firstName}', '${lastName}', '${email}', '${phone}')"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
     </div>
   `;
-  // Reapply the data attribute so the row can be found later
+
   rowDiv.setAttribute("data-contact-id", contactID);
 }
 
