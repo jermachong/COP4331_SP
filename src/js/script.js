@@ -468,7 +468,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document
     .getElementById("searchButton")
-    .addEventListener("click", function () {
+    .addEventListener("click", function (event) {
+      event.preventDefault();
       searchContacts();
     });
 
