@@ -165,11 +165,15 @@ function fetchContacts() {
     return;
   }
   // Call the GET endpoint with the user_id query parameter
-
   fetch(`./contact_manager/api/get_contacts.php?user_id=${userId}`, {
     method: "GET",
   })
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
     .then((contacts) => {
       // Get the container element defined in index.html
       const friendsTab = document.getElementById("friends");
