@@ -165,38 +165,29 @@ function fetchContacts() {
     return;
   }
 
-  fetch("LAMPAPI/UpdateContacts.php", {
-    method: "POST",
-    body: JSON.stringify({ userId: userId }),
-    headers: { "Content-Type": "application/json" },
+  // Call the GET endpoint with the user_id query parameter
+  fetch(`./contact_manager/api/get_contacts.php?user_id=${userId}`, {
+    method: "GET",
   })
     .then((response) => response.json())
-    .then((data) => {
-      if (data.error) {
-        alert("Error fetching contacts: " + data.error);
-        return;
-      }
-
-      // data.contacts might be an array of contacts
+    .then((contacts) => {
+      // Get the container element defined in index.html
       const friendsTab = document.getElementById("friends");
-
       // Clear existing contacts
       friendsTab.innerHTML = "";
-
-      // Rebuild the display
-      data.contacts.forEach((contact) => {
+      // Loop through the contacts array and build the UI
+      contacts.forEach((contact) => {
         let rowDiv = document.createElement("div");
         rowDiv.classList.add("d-flex", "justify-content-around", "mb-2");
-
         rowDiv.innerHTML = `
-          <div class="p-2">${contact.firstName} ${contact.lastName}</div>
-          <div class="p-2">${contact.email}</div>
-          <div class="p-2">${contact.phone}</div>
+          <div class="p-2">${contact.FirstName} ${contact.LastName}</div>
+          <div class="p-2">${contact.Email}</div>
+          <div class="p-2">${contact.Phone}</div>
           <div class="p-2 d-flex gap-2">
-            <button class="btn btn-outline-light btn-sm" onclick="editContact(${contact.id})">
+            <button class="btn btn-outline-light btn-sm" onclick="editContact(${contact.ID})">
               <i class="bi bi-pencil-square" style="color: #ffffff"></i>
             </button>
-            <button class="btn btn-danger btn-sm" onclick="deleteContact(${contact.id})">
+            <button class="btn btn-danger btn-sm" onclick="deleteContact(${contact.ID})">
               <i class="bi bi-trash-fill"></i>
             </button>
           </div>
@@ -205,7 +196,7 @@ function fetchContacts() {
       });
     })
     .catch((error) => {
-      console.error("Error:", error);
+      console.error("Error fetching contacts:", error);
       alert("An error occurred while fetching contacts.");
     });
 }
