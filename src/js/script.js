@@ -125,6 +125,7 @@ function addContact() {
   let lastName = document.getElementById("addLastName").value.trim();
   let email = document.getElementById("addEmail").value.trim();
   let phone = document.getElementById("addPhoneNumber").value.trim();
+  let username = document.getElementById("addUsername").value.trim();
 
   // prepare payload
   let payload = {
@@ -148,7 +149,7 @@ function addContact() {
       } else {
         alert("New contact added successfully!");
         document.getElementById("addFriendsForm").reset();
-        // Fetch updated list of contacts
+
         fetchContacts();
       }
     })
@@ -157,15 +158,14 @@ function addContact() {
       alert("An error occurred while adding the contact.");
     });
 }
-
 function fetchContacts() {
   const userId = localStorage.getItem("userId");
   if (!userId) {
     // Not logged in
     return;
   }
-  // Update the fetch URL to match your folder structure.
-  fetch(`LAMPAPI/get_contacts.php?user_id=${userId}`, {
+  // Call the GET endpoint with the user_id query parameter
+  fetch(`./contact_manager/api/get_contacts.php?user_id=${userId}`, {
     method: "GET",
   })
     .then((response) => {
@@ -175,7 +175,7 @@ function fetchContacts() {
       return response.json();
     })
     .then((contacts) => {
-      // Get the container element defined in your HTML
+      // Get the container element defined in index.html
       const friendsTab = document.getElementById("friends");
       // Clear existing contacts
       friendsTab.innerHTML = "";
