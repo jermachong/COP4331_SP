@@ -145,7 +145,7 @@ function addContactToUI(contact) {
         <div class="p-2 email" style="color: #ffffff; flex: 3; text-align: left;">${contact.Email}</div>
         <div class="p-2 phone" style="color: #ffffff; flex: 2; text-align: left;">${contact.Phone}</div>
         <div class="p-2 d-flex align-items-center" style="flex: 1; gap: 5px; justify-content: center;">
-          <button class="btn btn-outline-light btn-sm edit-btn" data-contact-id="${contact.ID}" onclick="editContact(${contact.ID})" style="color: #ffffff;">
+          <button class="btn btn-outline-light btn-sm edit-btn" data-contact-id="${contact.ID}" style="color: #ffffff;">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
               <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293z"/>
             </svg>
@@ -270,7 +270,7 @@ function cancelEdit(
       <button class="btn btn-outline-light btn-sm edit-btn" data-contact-id="${contactID}" onclick="editContact(${contactID})">
         <i class="bi bi-pencil-square" style="color: #ffffff"></i>
       </button>
-      <button class="btn btn-danger btn-sm delete-btn" data-contact-id="${contactID}" onclick="deleteContact(${contactID})">
+      <button class="btn btn-danger btn-sm delete-btn" data-contact-id="${contactID}">
         <i class="bi bi-trash-fill"></i>
       </button>
     </div>
