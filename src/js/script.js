@@ -374,6 +374,53 @@ function deleteContact(contactID) {
     });
 }
 
+function searchContacts() {
+  const searchTerm = document.getElementById("searchInput").value.trim();
+  const userId = localStorage.getItem("userId");
+
+  if (!userId) {
+    alert("You must be logged in to search contacts.");
+    return;
+  }
+
+  const payload = {
+    Search: searchTerm,
+    UserID: parseInt(userId, 10),
+  };
+
+  fetch("LAMPAPI/SearchContacts.php", {
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: { "Content-Type": "application/json" },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.error && data.error !== "") {
+        alert("Search failed: " + data.error);
+      } else {
+        const contacts = data.results || [];
+        const friendsTab = document.getElementById("friends");
+        friendsTab.innerHTML = "";
+
+        contacts.forEach((contact) => {
+          const adaptedContact = {
+            ID: contact.contactID,
+            FirstName: contact.contactFirstName,
+            LastName: contact.contactLastName,
+            Email: contact.contactEmail,
+            Phone: contact.contactPhone,
+          };
+
+          addContactToUI(adaptedContact);
+        });
+      }
+    })
+    .catch((error) => {
+      console.error("Error searching contacts:", error);
+      alert("An error occurred while searching for contacts.");
+    });
+}
+
 // DOMContentLoaded Setup
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -417,6 +464,12 @@ document.addEventListener("DOMContentLoaded", function () {
     .addEventListener("submit", function (event) {
       event.preventDefault();
       addContact();
+    });
+
+  document
+    .getElementById("searchButton")
+    .addEventListener("click", function () {
+      searchContacts();
     });
 
   const friendsTab = document.getElementById("friends");
