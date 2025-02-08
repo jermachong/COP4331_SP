@@ -128,7 +128,7 @@ function addContactToUI(contact) {
   rowDiv.classList.add("d-flex", "justify-content-around");
 
   // Apply desired styling to the row
-  rowDiv.style.padding = "20px";
+  rowDiv.style.padding = "0px";
   rowDiv.style.margin = "0px";
   rowDiv.style.width = "100%";
   rowDiv.style.gap = "0px";
@@ -138,7 +138,7 @@ function addContactToUI(contact) {
   // Build the inner HTML. Here we set flex values on each column so that you can adjust their widths.
   rowDiv.innerHTML = `
     <div id="hstackContainer" class="w-100" style="border-color: #ffffff;">
-      <div class="d-flex justify-content-around align-items-center" style="width: 100%; gap: 0;">
+      <div class="d-flex justify-content-around" style="width: 100%; gap: 0;">
         <!-- Name column: flex: 2 -->
         <div class="p-2 name" style="color: #ffffff; flex: 2; text-align: left;">${fullName}</div>
         <!-- Email column: flex: 3 -->
