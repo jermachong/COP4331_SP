@@ -23,6 +23,7 @@ function loginUser() {
         document.getElementById("loginPage").style.display = "none";
         document.getElementById("homePage").style.display = "block";
         document.getElementById("mainHeader").style.display = "block";
+        fetchContacts();
       }
     });
 }
@@ -113,7 +114,6 @@ function addContact() {
     });
 }
 
-// Helper function to add a contact's HTML to the UI
 function addContactToUI(contact) {
   const friendsTab = document.getElementById("friends");
   if (!friendsTab) {
@@ -124,20 +124,33 @@ function addContactToUI(contact) {
   // Create a new row for the contact
   let rowDiv = document.createElement("div");
   rowDiv.setAttribute("data-contact-id", contact.ID);
-  rowDiv.classList.add("d-flex", "justify-content-around", "mb-2");
+  // Remove vertical gap between rows by not including margin-bottom
+  rowDiv.classList.add("d-flex", "justify-content-around");
 
+  // Apply desired styling to the row
   rowDiv.style.padding = "20px";
   rowDiv.style.margin = "0px";
+  rowDiv.style.borderStyle = "solid";
+  rowDiv.style.borderColor = "#000000";
+  rowDiv.style.borderRadius = "10px";
+  rowDiv.style.width = "100%";
+  // Remove any gap between the row's direct children
+  rowDiv.style.gap = "0px";
 
   const fullName = `${contact.FirstName} ${contact.LastName}`;
 
+  // Build the inner HTML. Here we set flex values on each column so that you can adjust their widths.
   rowDiv.innerHTML = `
-    <div id="hstackContainer" class="w-100" style="border-color: #ffffff">
-      <div class="d-flex justify-content-around">
-        <div class="p-2 name" style="color: #ffffff;">${fullName}</div>
-        <div class="p-2 email" style="color: #ffffff;">${contact.Email}</div>
-        <div class="p-2 phone" style="color: #ffffff;">${contact.Phone}</div>
-        <div class="p-2 d-flex gap-2 actions" style="color: #ffffff;">
+    <div id="hstackContainer" class="w-100" style="border-color: #ffffff;">
+      <div class="d-flex justify-content-around align-items-center" style="width: 100%; gap: 0;">
+        <!-- Name column: flex: 2 -->
+        <div class="p-2 name" style="color: #ffffff; flex: 2; text-align: left;">${fullName}</div>
+        <!-- Email column: flex: 3 -->
+        <div class="p-2 email" style="color: #ffffff; flex: 3; text-align: left;">${contact.Email}</div>
+        <!-- Phone column: flex: 2 -->
+        <div class="p-2 phone" style="color: #ffffff; flex: 2; text-align: left;">${contact.Phone}</div>
+        <!-- Actions column: flex: 1 -->
+        <div class="p-2 d-flex align-items-center" style="flex: 1; gap: 5px; justify-content: center;">
           <button class="btn btn-outline-light btn-sm edit-btn" data-contact-id="${contact.ID}" onclick="editContact(${contact.ID})" style="color: #ffffff;">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
               <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293z"/>
@@ -151,10 +164,9 @@ function addContactToUI(contact) {
         </div>
       </div>
     </div>
-
   `;
 
-  // Append the newly created row to the container
+  // Append the row to the "friends" container
   friendsTab.appendChild(rowDiv);
 }
 
