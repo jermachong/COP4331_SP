@@ -25,6 +25,7 @@ function loginUser() {
         document.getElementById("homePage").style.display = "block";
         document.getElementById("mainHeader").style.display = "block";
         fetchContacts();
+        fetchUserProfile();
       }
     });
 }
@@ -334,7 +335,36 @@ function fetchContacts() {
     });
 }
 
-// Global helper function to delete a contact
+function fetchUserProfile() {
+  const userId = localStorage.getItem("userId");
+  if (!userId) return;
+
+  fetch(`LAMPAPI/GetUserProfile.php`, {
+    method: "POST",
+    body: JSON.stringify({ userID: userId }),
+    headers: { "Content-Type": "application/json" },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.error) {
+        console.error("Error fetching user profile:", data.error);
+        alert("Could not load profile information.");
+      } else {
+        document.getElementById("myFirstName").value = data.firstName || "";
+        document.getElementById("myLastName").value = data.lastName || "";
+        document.getElementById("myEmail").value = data.email || "";
+        document.getElementById("myPhoneNumber").value = data.phone || "";
+        document.getElementById("myUsername").value = data.username || "";
+
+        document.getElementById("myPassword").value = "";
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      alert("Could not load profile information.");
+    });
+}
+
 function deleteContact(contactID) {
   if (!confirm("Are you sure you want to delete this contact?")) {
     return;
@@ -472,6 +502,43 @@ document.addEventListener("DOMContentLoaded", function () {
       event.preventDefault();
       searchContacts();
     });
+
+  document
+    .getElementById("saveProfileChanges")
+    .addEventListener("click", updateUserProfile);
+
+  function updateUserProfile() {
+    const userId = localStorage.getItem("userId");
+    if (!userId) return;
+
+    const payload = {
+      userID: userId,
+      firstName: document.getElementById("myFirstName").value.trim(),
+      lastName: document.getElementById("myLastName").value.trim(),
+      email: document.getElementById("myEmail").value.trim(),
+      phone: document.getElementById("myPhoneNumber").value.trim(),
+      username: document.getElementById("myUsername").value.trim(),
+      password: document.getElementById("myPassword").value.trim(),
+    };
+
+    fetch("LAMPAPI/UpdateUserProfile.php", {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          alert("Error updating profile: " + data.error);
+        } else {
+          alert("Profile updated successfully!");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        alert("Error updating profile!");
+      });
+  }
 
   const friendsTab = document.getElementById("friends");
   if (friendsTab) {
