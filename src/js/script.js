@@ -130,11 +130,7 @@ function addContactToUI(contact) {
   // Apply desired styling to the row
   rowDiv.style.padding = "20px";
   rowDiv.style.margin = "0px";
-  rowDiv.style.borderStyle = "solid";
-  rowDiv.style.borderColor = "#000000";
-  rowDiv.style.borderRadius = "10px";
   rowDiv.style.width = "100%";
-  // Remove any gap between the row's direct children
   rowDiv.style.gap = "0px";
 
   const fullName = `${contact.FirstName} ${contact.LastName}`;
