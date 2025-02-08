@@ -140,13 +140,10 @@ function addContactToUI(contact) {
   rowDiv.innerHTML = `
     <div id="hstackContainer" class="w-100" style="border-color: #ffffff;">
       <div class="d-flex justify-content-around" style="width: 100%; gap: 0;">
-        <!-- Name column: flex: 2 -->
-        <div class="p-2 name" style="color: #ffffff; flex: 2; text-align: left;">${fullName}</div>
-        <!-- Email column: flex: 3 -->
+         <div class="p-2 firstName" style="color: #ffffff; flex: 2; text-align: left;">${contact.FirstName}</div>
+    <div class="p-2 lastName"  style="color: #ffffff; flex: 2; text-align: left;">${contact.LastName}</div>
         <div class="p-2 email" style="color: #ffffff; flex: 3; text-align: left;">${contact.Email}</div>
-        <!-- Phone column: flex: 2 -->
         <div class="p-2 phone" style="color: #ffffff; flex: 2; text-align: left;">${contact.Phone}</div>
-        <!-- Actions column: flex: 1 -->
         <div class="p-2 d-flex align-items-center" style="flex: 1; gap: 5px; justify-content: center;">
           <button class="btn btn-outline-light btn-sm edit-btn" data-contact-id="${contact.ID}" onclick="editContact(${contact.ID})" style="color: #ffffff;">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
@@ -179,13 +176,22 @@ function editContact(contactID) {
   let phone = rowDiv.querySelector(".phone").innerText;
 
   rowDiv.innerHTML = `
-    <div class="p-2"><input type="text" class="editFirstName" value="${firstName}"></div>
-    <div class="p-2"><input type="text" class="editLastName" value="${lastName}"></div>
-    <div class="p-2"><input type="text" class="editEmail" value="${email}"></div>
-    <div class="p-2"><input type="text" class="editPhone" value="${phone}"></div>
+    <div class="p-2">
+      <input type="text" class="editFirstName" value="${firstName}">
+    </div>
+    <div class="p-2">
+      <input type="text" class="editLastName" value="${lastName}">
+    </div>
+    <div class="p-2">
+      <input type="text" class="editEmail" value="${email}">
+    </div>
+    <div class="p-2">
+      <input type="text" class="editPhone" value="${phone}">
+    </div>
     <div class="p-2 d-flex gap-2">
       <button class="btn btn-success btn-sm" onclick="saveContact(${contactID})">Save</button>
-      <button class="btn btn-secondary btn-sm" onclick="cancelEdit(${contactID}, '${firstName}', '${lastName}', '${email}', '${phone}')">Cancel</button>
+      <button class="btn btn-secondary btn-sm" 
+              onclick="cancelEdit(${contactID}, '${firstName}', '${lastName}', '${email}', '${phone}')">Cancel</button>
     </div>
   `;
   // Reapply the data attribute so the row can be found later
