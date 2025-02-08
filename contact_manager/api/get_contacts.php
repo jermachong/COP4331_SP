@@ -5,7 +5,8 @@ error_reporting(E_ALL);
 
 header("Content-Type: application/json");
 
-include __DIR__ . '/../config/db.php';
+include __DIR__ . '/../../config/db.php';
+
 
 // Retrieve and sanitize the user_id from the GET parameters
 $user_id = isset($_GET['user_id']) ? intval($_GET['user_id']) : 0;
