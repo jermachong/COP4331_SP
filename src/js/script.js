@@ -277,14 +277,17 @@ function fetchContacts() {
     return;
   }
 
-  // Replace with the correct URL to your FetchContacts.php endpoint
   fetch(`LAMPAPI/FetchContacts.php?user_id=${userId}`)
     .then((response) => response.json())
-    .then((contacts) => {
-      // Clear the current UI (if necessary)
+    .then((data) => {
+      // Check if the data has a contacts property
+      const contacts = data.contacts;
+      if (!Array.isArray(contacts)) {
+        console.error("Expected contacts to be an array, but got:", contacts);
+        return;
+      }
       const friendsTab = document.getElementById("friends");
       friendsTab.innerHTML = "";
-      // For each contact returned, add it to the UI
       contacts.forEach((contact) => {
         addContactToUI(contact);
       });
