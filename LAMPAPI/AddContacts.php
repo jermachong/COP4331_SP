@@ -28,6 +28,8 @@
 		$stmt = $conn->prepare("INSERT into Contacts (FirstName, LastName, Phone, Email, UserID) VALUES(?,?,?,?,?)"); //should receive userid from frontend to make this work
 		$stmt->bind_param("ssssi", $firstname, $lastname, $phone, $email, $userId);
 		$stmt->execute();
+		$newID = $stmt->insert_id;
+
 		$stmt->close();
 		$conn->close();
 		returnWithError("");
@@ -49,6 +51,13 @@
 	{
 		$retValue = '{"error":"' . $err . '"}';
 		sendResultInfoAsJson( $retValue );
+	}
+
+	function returnWithSuccess($id)
+	{
+		$retValue = '{"error":"","id":' . $id . '}';
+		sendResultInfoAsJson($retValue);
+		exit;
 	}
 	
 ?>

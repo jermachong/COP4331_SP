@@ -126,7 +126,6 @@ function addContact() {
   let email = document.getElementById("addEmail").value.trim();
   let phone = document.getElementById("addPhoneNumber").value.trim();
 
-  // prepare payload
   let payload = {
     FirstName: firstName,
     LastName: lastName,
@@ -135,7 +134,6 @@ function addContact() {
     UserID: userId,
   };
 
-  // send post request to add new contact
   fetch("LAMPAPI/AddContacts.php", {
     method: "POST",
     body: JSON.stringify(payload),
@@ -146,10 +144,19 @@ function addContact() {
       if (data.error) {
         alert("Failed to add contact: " + data.error);
       } else {
+        // data.id is the newly inserted contact's ID
         alert("New contact added successfully!");
         document.getElementById("addFriendsForm").reset();
 
-        fetchContacts();
+        // Insert the new contact into the UI
+        const newContact = {
+          FirstName: firstName,
+          LastName: lastName,
+          Email: email,
+          Phone: phone,
+          ID: data.id, // from AddContacts.php
+        };
+        addContactToUI(newContact);
       }
     })
     .catch((error) => {
@@ -157,49 +164,33 @@ function addContact() {
       alert("An error occurred while adding the contact.");
     });
 }
-function fetchContacts() {
-  const userId = localStorage.getItem("userId");
-  if (!userId) {
-    // Not logged in
+
+// Add this helper function
+function addContactToUI(contact) {
+  const friendsTab = document.getElementById("friends");
+  console.log("friendsTab:", friendsTab); // Check if this logs null or the element
+
+  if (!friendsTab) {
+    console.error("No element with id 'friends' found.");
     return;
   }
-  // Call the GET endpoint with the user_id query parameter
-  fetch(`LAMPAPI/FetchContacts.php?user_id=${userId}`, {
-    method: "GET",
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((contacts) => {
-      // Get the container element defined in index.html
-      const friendsTab = document.getElementById("friends");
-      // Clear existing contacts
-      friendsTab.innerHTML = "";
-      // Loop through the contacts array and build the UI
-      contacts.forEach((contact) => {
-        let rowDiv = document.createElement("div");
-        rowDiv.classList.add("d-flex", "justify-content-around", "mb-2");
-        rowDiv.innerHTML = `
-          <div class="p-2">${contact.FirstName} ${contact.LastName}</div>
-          <div class="p-2">${contact.Email}</div>
-          <div class="p-2">${contact.Phone}</div>
-          <div class="p-2 d-flex gap-2">
-            <button class="btn btn-outline-light btn-sm" onclick="editContact(${contact.ID})">
-              <i class="bi bi-pencil-square" style="color: #ffffff"></i>
-            </button>
-            <button class="btn btn-danger btn-sm" onclick="deleteContact(${contact.ID})">
-              <i class="bi bi-trash-fill"></i>
-            </button>
-          </div>
-        `;
-        friendsTab.appendChild(rowDiv);
-      });
-    })
-    .catch((error) => {
-      console.error("Error fetching contacts:", error);
-      alert("An error occurred while fetching contacts.");
-    });
+  let rowDiv = document.createElement("div");
+  rowDiv.classList.add("d-flex", "justify-content-around", "mb-2");
+
+  rowDiv.innerHTML = `
+    <div class="p-2">${contact.FirstName} ${contact.LastName}</div>
+    <div class="p-2">${contact.Email}</div>
+    <div class="p-2">${contact.Phone}</div>
+    <div class="p-2 d-flex gap-2">
+      <button class="btn btn-outline-light btn-sm" onclick="editContact(${contact.ID})">
+        <i class="bi bi-pencil-square" style="color: #ffffff"></i>
+      </button>
+      <button class="btn btn-danger btn-sm" onclick="deleteContact(${contact.ID})">
+        <i class="bi bi-trash-fill"></i>
+      </button>
+    </div>
+  `;
+
+  // Append the newly created row to your existing list
+  friendsTab.appendChild(rowDiv);
 }
