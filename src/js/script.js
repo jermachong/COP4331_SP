@@ -288,7 +288,7 @@ function deleteContact(contactID) {
     contactLastName: contactLastName,
   };
 
-  fetch("LAMPAPI/DeleteContact.php", {
+  fetch("LAMPAPI/DeleteContacts.php", {
     method: "POST",
     body: JSON.stringify(payload),
     headers: { "Content-Type": "application/json" },
