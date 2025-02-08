@@ -282,7 +282,7 @@ function fetchContacts() {
   fetch(`LAMPAPI/FetchContacts.php?user_id=${userId}`)
     .then((response) => response.json())
     .then((data) => {
-      // Check if the data has a contacts property
+      console.log("API Response:", data); // Log full response
       const contacts = data.contacts;
       if (!Array.isArray(contacts)) {
         console.error("Expected contacts to be an array, but got:", contacts);
