@@ -46,6 +46,24 @@ document.addEventListener("DOMContentLoaded", function () {
       event.preventDefault();
       addContact();
     });
+
+  const friendsTab = document.getElementById("friends");
+  if (friendsTab) {
+    friendsTab.addEventListener("click", function (event) {
+      const editBtn = event.target.closest(".edit-btn");
+      if (editBtn) {
+        const contactID = editBtn.getAttribute("data-contact-id");
+        editContact(contactID);
+        return;
+      }
+      const deleteBtn = event.target.closest(".delete-btn");
+      if (deleteBtn) {
+        const contactID = deleteBtn.getAttribute("data-contact-id");
+        deleteContact(contactID);
+        return;
+      }
+    });
+  }
 });
 
 // Function to handle user login
@@ -178,9 +196,9 @@ function addContactToUI(contact) {
   rowDiv.classList.add("d-flex", "justify-content-around", "mb-2");
 
   rowDiv.innerHTML = `
-    <div class="p-2">${contact.FirstName} ${contact.LastName}</div>
-    <div class="p-2">${contact.Email}</div>
-    <div class="p-2">${contact.Phone}</div>
+    <div class="p-2 firstName">${contact.FirstName} ${contact.LastName}</div>
+    <div class="p-2 email">${contact.Email}</div>
+    <div class="p-2 phone">${contact.Phone}</div>
     <div class="p-2 d-flex gap-2">
       <button class="btn btn-outline-light btn-sm" onclick="editContact(${contact.ID})">
         <i class="bi bi-pencil-square" style="color: #ffffff"></i>
@@ -193,4 +211,106 @@ function addContactToUI(contact) {
 
   // Append the newly created row to your existing list
   friendsTab.appendChild(rowDiv);
+}
+
+function editContact(contactID) {
+  // Find the row element for the contact using a data attribute
+  let rowDiv = document.querySelector(`div[data-contact-id='${contactID}']`);
+  if (!rowDiv) return;
+
+  // Get the current values
+  let firstName = rowDiv.querySelector(".firstName").innerText;
+  let lastName = rowDiv.querySelector(".lastName").innerText;
+  let email = rowDiv.querySelector(".email").innerText;
+  let phone = rowDiv.querySelector(".phone").innerText;
+
+  // Replace static text with input fields for editing
+  rowDiv.innerHTML = `
+    <div class="p-2"><input type="text" class="editFirstName" value="${firstName}"></div>
+    <div class="p-2"><input type="text" class="editLastName" value="${lastName}"></div>
+    <div class="p-2"><input type="text" class="editEmail" value="${email}"></div>
+    <div class="p-2"><input type="text" class="editPhone" value="${phone}"></div>
+    <div class="p-2 d-flex gap-2">
+      <button class="btn btn-success btn-sm" onclick="saveContact(${contactID})">Save</button>
+      <button class="btn btn-secondary btn-sm" onclick="cancelEdit(${contactID}, '${firstName}', '${lastName}', '${email}', '${phone}')">Cancel</button>
+    </div>
+  `;
+}
+
+function saveContact(contactID) {
+  let rowDiv = document.querySelector(`div[data-contact-id='${contactID}']`);
+  if (!rowDiv) return;
+
+  // Collect updated values from the input fields
+  let updatedFirstName = rowDiv.querySelector(".editFirstName").value;
+  let updatedLastName = rowDiv.querySelector(".editLastName").value;
+  let updatedEmail = rowDiv.querySelector(".editEmail").value;
+  let updatedPhone = rowDiv.querySelector(".editPhone").value;
+
+  // Create payload that matches updateContacts.php expectations
+  let payload = {
+    contactFirstName: updatedFirstName,
+    contactLastName: updatedLastName,
+    contactEmail: updatedEmail,
+    contactPhone: updatedPhone,
+    contactID: contactID,
+  };
+  fetch("LAMPAPI/UpdateContacts.php", {
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: { "Content-Type": "application/json" },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.error) {
+        alert("Error updating contact: " + data.error);
+      } else {
+        // Update succeeded; update the row with static text
+        rowDiv.innerHTML = `
+        <div class="p-2 firstName">${updatedFirstName}</div>
+        <div class="p-2 lastName">${updatedLastName}</div>
+        <div class="p-2 email">${updatedEmail}</div>
+        <div class="p-2 phone">${updatedPhone}</div>
+        <div class="p-2 d-flex gap-2">
+          <button class="btn btn-outline-light btn-sm" onclick="editContact(${contactID})">
+            <i class="bi bi-pencil-square" style="color: #ffffff"></i>
+          </button>
+          <button class="btn btn-danger btn-sm" onclick="deleteContact(${contactID})">
+            <i class="bi bi-trash-fill"></i>
+          </button>
+        </div>
+      `;
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      alert("An error occurred while updating the contact.");
+    });
+}
+
+function cancelEdit(
+  contactID,
+  originalFirst,
+  originalLast,
+  originalEmail,
+  originalPhone
+) {
+  let rowDiv = document.querySelector(`div[data-contact-id='${contactID}']`);
+  if (!rowDiv) return;
+
+  // Revert the row to the original values (static text)
+  rowDiv.innerHTML = `
+    <div class="p-2 firstName">${originalFirst}</div>
+    <div class="p-2 lastName">${originalLast}</div>
+    <div class="p-2 email">${originalEmail}</div>
+    <div class="p-2 phone">${originalPhone}</div>
+    <div class="p-2 d-flex gap-2">
+      <button class="btn btn-outline-light btn-sm" onclick="editContact(${contactID})">
+        <i class="bi bi-pencil-square" style="color: #ffffff"></i>
+      </button>
+      <button class="btn btn-danger btn-sm" onclick="deleteContact(${contactID})">
+        <i class="bi bi-trash-fill"></i>
+      </button>
+    </div>
+  `;
 }
