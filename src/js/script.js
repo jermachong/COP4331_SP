@@ -148,8 +148,8 @@ function addContact() {
       } else {
         alert("New contact added successfully!");
         document.getElementById("addFriendsForm").reset();
-        // Append the new contact to the UI
-        appendContactToUI(data.newContact);
+
+        appendNewContact(data.newContact);
       }
     })
     .catch((error) => {
@@ -157,11 +157,11 @@ function addContact() {
       alert("An error occurred while adding the contact.");
     });
 }
-
-function appendContactToUI(contact) {
+function appendNewContact(contact) {
   const friendsTab = document.getElementById("friends");
   let rowDiv = document.createElement("div");
   rowDiv.classList.add("d-flex", "justify-content-around", "mb-2");
+
   rowDiv.innerHTML = `
     <div class="p-2">${contact.firstName} ${contact.lastName}</div>
     <div class="p-2">${contact.email}</div>
@@ -177,6 +177,7 @@ function appendContactToUI(contact) {
   `;
   friendsTab.appendChild(rowDiv);
 }
+
 function fetchContacts() {
   const userId = localStorage.getItem("userId");
   if (!userId) {
