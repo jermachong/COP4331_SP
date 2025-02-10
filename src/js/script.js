@@ -354,7 +354,7 @@ function cancelEdit(
           <div id="hstackContainer" class="w-100" style="border-color: #ffffff;">
         <div class="d-flex justify-content-around" style="width: 100%; gap: 0;">
           <div class="p-2 firstName" style="color: #ffffff; flex: 2; text-align: left;">${originalFirst}</div>
-          <div class="p-2 lastName"  style="color: #ffffff; flex: 2; text-align: left;">${originalFirst}</div>
+          <div class="p-2 lastName"  style="color: #ffffff; flex: 2; text-align: left;">${originalLast}</div>
           <div class="p-2 email"     style="color: #ffffff; flex: 3; text-align: left;">${originalEmail}</div>
           <div class="p-2 phone"     style="color: #ffffff; flex: 2; text-align: left;">${originalPhone}</div>
           <div class="p-2 d-flex align-items-center" style="flex: 1; gap: 5px; justify-content: center;">
@@ -416,8 +416,7 @@ function deleteContact(contactID) {
 
   let payload = {
     userID: localStorage.getItem("userId"),
-    contactFirstName: contactFirstName,
-    contactLastName: contactLastName,
+    contactID: contactID,
   };
 
   fetch("LAMPAPI/DeleteContacts.php", {
