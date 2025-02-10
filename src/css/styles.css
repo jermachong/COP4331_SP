@@ -139,7 +139,6 @@ body #mainHeader {
   display: none;
 }
 
-
 .custom-btn {
   background-color: #2e2f33; /* Change the background color */
   color: white; /* Change the text color */
@@ -154,4 +153,8 @@ body #mainHeader {
 
 body #mainHeader {
   display: none;
+}
+
+.form-control:not(:focus):not(:placeholder-shown) {
+  color: black;
 }
