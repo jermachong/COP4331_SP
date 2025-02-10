@@ -21,10 +21,6 @@ window.onload = function () {
   }
 };
 
-
-
-
-
 // Function to handle user login
 function loginUser() {
   let login = document.getElementById("inputUsername").value;
@@ -48,8 +44,6 @@ function loginUser() {
         document.getElementById("homePage").style.display = "block";
         document.getElementById("mainHeader").style.display = "block";
 
-
-
         fetchContacts();
       }
     });
@@ -65,17 +59,17 @@ function signUpUser() {
   let phone = document.getElementById("inputPhoneNumber").value;
   let payload = { firstName, lastName, login, password, email, phone };
 
-   // Validate first name
-    if (firstName.trim() === '') {
-        alert("First name is required.");
-        return;  // Prevent further execution if validation fails
-    }
+  // Validate first name
+  if (firstName.trim() === "") {
+    alert("First name is required.");
+    return; // Prevent further execution if validation fails
+  }
 
-    // Validate password length
-    if (password.length < 8) {
-        alert("Password must be at least 8 characters.");
-        return;  // Prevent further execution if validation fails
-    }
+  // Validate password length
+  if (password.length < 8) {
+    alert("Password must be at least 8 characters.");
+    return; // Prevent further execution if validation fails
+  }
 
   fetch("LAMPAPI/SignUp.php", {
     method: "POST",
@@ -104,10 +98,10 @@ function logoutUser() {
   document.getElementById("homePage").style.display = "none";
   document.getElementById("loginPage").style.display = "block";
 
-	const friendsTab = document.getElementById("friends");
-	if(friendsTab){
-	friendsTab.innerHTML = ' ';
-}
+  const friendsTab = document.getElementById("friends");
+  if (friendsTab) {
+    friendsTab.innerHTML = " ";
+  }
 }
 
 // Function to add a contact (send to server and update UI)
@@ -123,11 +117,16 @@ function addContact() {
   let email = document.getElementById("addEmail").value.trim();
   let phone = document.getElementById("addPhoneNumber").value.trim();
 
-// Validate that all fields are filled
-    if (firstName.trim() === '' || lastName.trim() === '' || email.trim() === '' || phone.trim() === '') {
-        alert("All fields must be filled out.");
-        return;  // Prevent further execution if validation fails
-    }
+  // Validate that all fields are filled
+  if (
+    firstName.trim() === "" ||
+    lastName.trim() === "" ||
+    email.trim() === "" ||
+    phone.trim() === ""
+  ) {
+    alert("All fields must be filled out.");
+    return; // Prevent further execution if validation fails
+  }
 
   let payload = {
     FirstName: firstName,
@@ -222,7 +221,6 @@ function editContact(contactID) {
   let lastName = rowDiv.querySelector(".lastName").innerText;
   let email = rowDiv.querySelector(".email").innerText;
   let phone = rowDiv.querySelector(".phone").innerText;
-    
 
   rowDiv.innerHTML = `
     <div id="hstackContainer" class="w-100" style="border-color: #ffffff;">
@@ -279,11 +277,16 @@ function saveContact(contactID) {
   let updatedEmail = rowDiv.querySelector(".editEmail").value;
   let updatedPhone = rowDiv.querySelector(".editPhone").value;
 
-// Validate that all fields are filled
-    if (updatedFirstName === '' || updatedLastName === '' || updatedEmail === '' || updatedPhone === '') {
-        alert("All fields must be filled out.");
-        return;  // Stop execution if validation fails
-    }
+  // Validate that all fields are filled
+  if (
+    updatedFirstName === "" ||
+    updatedLastName === "" ||
+    updatedEmail === "" ||
+    updatedPhone === ""
+  ) {
+    alert("All fields must be filled out.");
+    return; // Stop execution if validation fails
+  }
 
   let payload = {
     contactFirstName: updatedFirstName,
